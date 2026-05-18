@@ -7,4 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Chapter extends Model
 {
     //
+    protected $fillable = [
+        'subject_id',
+        'name',
+        'order_index',
+    ];
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

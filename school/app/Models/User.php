@@ -7,7 +7,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\Question;
+use App\Models\Exam;
+use App\Models\StudentExam;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -22,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,5 +48,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // =========================
+    // RELATIONSHIPS
+    // =========================
+
+    public function createdQuestions()
+    {
+        return $this->hasMany(
+            Question::class,
+            'created_by'
+        );
+    }
+
+    public function createdExams()
+    {
+        return $this->hasMany(
+            Exam::class,
+            'created_by'
+        );
+    }
+
+    public function studentExams()
+    {
+        return $this->hasMany(StudentExam::class);
     }
 }
