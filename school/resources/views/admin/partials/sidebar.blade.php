@@ -1,29 +1,64 @@
-<div class="sidebar">
+{{-- resources/views/admin/partials/sidebar.blade.php --}}
 
-    <h2>THPT Admin</h2>
+<aside class="sidebar" id="sidebar">
 
-    <a href="{{ route('dashboard') }}">
-        Dashboard
-    </a>
+    <div class="sidebar-top">
 
-    <a href="{{ route('subjects.index') }}">
-        Subjects
-    </a>
+        <div class="logo">
 
-    <a href="{{ route('chapters.index') }}">
-        Chapters
-    </a>
+            <div class="logo-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
 
-    <a href="#">
-        Questions
-    </a>
+            <div>
+                <h2>THPT Admin</h2>
+                <span>Exam Management</span>
+            </div>
 
-    <a href="#">
-        Exams
-    </a>
+        </div>
 
-    <a href="#">
-        Students
-    </a>
+    </div>
 
-</div>
+    <div class="sidebar-menu">
+
+        <a href="{{ route('dashboard') }}"
+           class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{{ route('subjects.index') }}"
+           class="{{ request()->routeIs('subjects.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-book"></i>
+            <span>Môn học</span>
+        </a>
+
+        <a href="{{ route('chapters.index') }}"
+           class="{{ request()->routeIs('chapters.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Chuyên đề</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>Câu hỏi</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Đề thi</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-users"></i>
+            <span>Học sinh</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Kết quả thi</span>
+        </a>
+
+    </div>
+
+</aside>

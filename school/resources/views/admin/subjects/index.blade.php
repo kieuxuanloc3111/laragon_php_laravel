@@ -1,79 +1,157 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+    <link rel="stylesheet"
+          href="{{ asset('assets/admin/css/subjects.css') }}">
+@endpush
+
+@section('title', 'Subjects')
+
 @section('content')
 
-<h1>Subjects</h1>
+<div class="page-header">
 
-<br>
+    <div>
 
-<a href="{{ route('subjects.create') }}">
-    Create Subject
-</a>
+        <h2 class="page-title">
+            Subjects
+        </h2>
 
-<br><br>
+        <p class="page-subtitle">
+            Quản lý môn học trong hệ thống
+        </p>
+
+    </div>
+
+    <a href="{{ route('subjects.create') }}"
+       class="btn btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Create Subject
+
+    </a>
+
+</div>
 
 @if(session('success'))
-    <p>{{ session('success') }}</p>
+
+    <div class="alert-success">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        {{ session('success') }}
+
+    </div>
+
 @endif
 
-<table border="1" cellpadding="10" cellspacing="0">
+<div class="card">
 
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Slug</th>
-        <th>Color</th>
-        <th>Action</th>
-    </tr>
+    <table class="table">
 
-    @foreach($subjects as $subject)
+        <thead>
 
-        <tr>
+            <tr>
 
-            <td>{{ $subject->id }}</td>
+                <th>ID</th>
+                <th>Môn học</th>
+                <th>Slug</th>
+                <th>Màu</th>
+                <th>Action</th>
 
-            <td>{{ $subject->name }}</td>
+            </tr>
 
-            <td>{{ $subject->slug }}</td>
+        </thead>
 
-            <td>
+        <tbody>
 
-                <div
-                    style="
-                        width: 30px;
-                        height: 30px;
-                        background: {{ $subject->color }};
-                        border-radius: 5px;
-                    "
-                ></div>
+        @foreach($subjects as $subject)
 
-            </td>
+            <tr>
 
-            <td>
+                <td>
+                    #{{ $subject->id }}
+                </td>
 
-                <a href="{{ route('subjects.edit', $subject->id) }}">
-                    Edit
-                </a>
+                <td>
 
-                <form
-                    action="{{ route('subjects.destroy', $subject->id) }}"
-                    method="POST"
-                    style="display:inline;"
-                >
-                    @csrf
-                    @method('DELETE')
+                    <div class="subject-info">
 
-                    <button type="submit">
-                        Delete
-                    </button>
-                </form>
+                        <div class="subject-dot"
+                             style="background: {{ $subject->color }}">
+                        </div>
 
-            </td>
+                        <span class="subject-name">
+                            {{ $subject->name }}
+                        </span>
 
-        </tr>
+                    </div>
 
-    @endforeach
+                </td>
 
-</table>
+                <td>
+
+                    <span class="badge-slug">
+                        {{ $subject->slug }}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <div class="color-box-wrapper">
+
+                        <div class="color-box"
+                             style="background: {{ $subject->color }}">
+                        </div>
+
+                        <span class="color-code">
+                            {{ $subject->color }}
+                        </span>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <a href="{{ route('subjects.edit', $subject->id) }}"
+                           class="btn-action btn-edit">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </a>
+
+                        <form action="{{ route('subjects.destroy', $subject->id) }}"
+                              method="POST">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn-action btn-delete">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
 
 @endsection

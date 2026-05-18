@@ -1,7 +1,9 @@
-<div class="footer">
+{{-- resources/views/admin/partials/footer.blade.php --}}
+
+<footer class="footer">
 
     <p>
-        THPT Exam System © 2026
+        © 2026 THPT Exam System — Developed with Laravel
     </p>
 
-</div>
+</footer>

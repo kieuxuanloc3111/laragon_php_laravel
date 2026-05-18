@@ -1,0 +1,233 @@
+/* public/assets/admin/css/app.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: #f3f6fb;
+    color: #1e293b;
+}
+
+/* LAYOUT */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 270px;
+    background: linear-gradient(180deg, #1e3a8a, #172554);
+    color: white;
+    padding: 24px 18px;
+    transition: 0.3s;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-top {
+    margin-bottom: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.logo h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.logo span {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    padding: 14px 16px;
+    border-radius: 14px;
+    transition: 0.25s;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sidebar-menu a i {
+    width: 20px;
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    transform: translateX(4px);
+}
+
+.sidebar-menu a.active {
+    background: white;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+/* MAIN */
+
+.main-wrapper {
+    flex: 1;
+    margin-left: 270px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+    height: 80px;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-left h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.header-left p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.menu-toggle {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.admin-info h4 {
+    font-size: 15px;
+}
+
+.admin-info span {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* CONTENT */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* CARD */
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+/* FOOTER */
+
+.footer {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 18px 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 992px){
+
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 999;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}

@@ -36,11 +36,13 @@ class ChapterController extends Controller
         $request->validate([
             'subject_id' => 'required',
             'name' => 'required',
+            'order_index' => 'required|integer',
         ]);
 
         Chapter::create([
             'subject_id' => $request->subject_id,
             'name' => $request->name,
+            'order_index' => $request->order_index,
         ]);
 
         return redirect()

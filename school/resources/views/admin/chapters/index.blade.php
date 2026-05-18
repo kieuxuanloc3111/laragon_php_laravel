@@ -22,6 +22,7 @@
         <th>ID</th>
         <th>Subject</th>
         <th>Name</th>
+        <th>Order</th>
         <th>Action</th>
     </tr>
 
@@ -36,6 +37,8 @@
             </td>
 
             <td>{{ $chapter->name }}</td>
+
+            <td>{{ $chapter->order_index }}</td>
 
             <td>
 
