@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SubjectController extends Controller
 {
@@ -13,7 +14,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::latest()->get();
+        $subjects = Subject::orderBy('id')->get();
 
         return view('admin.subjects.index', compact('subjects'));
     }
@@ -32,20 +33,21 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:subjects',
+            'name' => 'required|unique:subjects,name',
             'color' => 'nullable',
         ]);
 
         Subject::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+
+            'slug' => Str::slug($request->name),
+
             'color' => $request->color,
         ]);
 
         return redirect()
             ->route('subjects.index')
-            ->with('success', 'Subject created successfully');
+            ->with('success', 'Thêm môn học thành công');
     }
 
     /**
@@ -62,20 +64,21 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
         $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:subjects,slug,' . $subject->id,
+            'name' => 'required|unique:subjects,name,' . $subject->id,
             'color' => 'nullable',
         ]);
 
         $subject->update([
             'name' => $request->name,
-            'slug' => $request->slug,
+
+            'slug' => Str::slug($request->name),
+
             'color' => $request->color,
         ]);
 
         return redirect()
             ->route('subjects.index')
-            ->with('success', 'Subject updated successfully');
+            ->with('success', 'Cập nhật môn học thành công');
     }
 
     /**
@@ -87,6 +90,6 @@ class SubjectController extends Controller
 
         return redirect()
             ->route('subjects.index')
-            ->with('success', 'Subject deleted successfully');
+            ->with('success', 'Xóa môn học thành công');
     }
 }

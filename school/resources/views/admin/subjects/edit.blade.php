@@ -1,86 +1,129 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+
+    <link rel="stylesheet"
+          href="{{ asset('assets/admin/css/subjects-create.css') }}">
+
+@endpush
+
+@section('title', 'Chỉnh sửa môn học')
+
 @section('content')
 
-<h1>Edit Subject</h1>
-
-<form
-    action="{{ route('subjects.update', $subject->id) }}"
-    method="POST"
->
-
-    @csrf
-    @method('PUT')
+<div class="page-header">
 
     <div>
-        <label>Name</label>
-        <br>
 
-        <input
-            type="text"
-            name="name"
-            value="{{ $subject->name }}"
-        >
+        <h2 class="page-title">
+            Chỉnh sửa môn học
+        </h2>
+
+        <p class="page-subtitle">
+            Cập nhật thông tin môn học
+        </p>
+
     </div>
 
-    <br>
+</div>
 
-    <div>
-        <label>Slug</label>
-        <br>
+<div class="card form-card">
 
-        <input
-            type="text"
-            name="slug"
-            value="{{ $subject->slug }}"
-        >
-    </div>
+    <form action="{{ route('subjects.update', $subject->id) }}"
+          method="POST">
 
-    <br>
+        @csrf
+        @method('PUT')
 
-    <div>
-        <label>Color</label>
-        <br>
+        {{-- TÊN MÔN HỌC --}}
 
-        <select name="color">
+        <div class="form-group">
 
-            <option
-                value="#3B82F6"
-                {{ $subject->color == '#3B82F6' ? 'selected' : '' }}
-            >
-                Blue
-            </option>
+            <label class="form-label">
+                Tên môn học
+            </label>
 
-            <option
-                value="#10B981"
-                {{ $subject->color == '#10B981' ? 'selected' : '' }}
-            >
-                Green
-            </option>
+            <input type="text"
+                   name="name"
+                   id="name"
+                   class="form-input"
+                   placeholder="Ví dụ: Toán học"
+                   value="{{ old('name', $subject->name) }}">
 
-            <option
-                value="#F59E0B"
-                {{ $subject->color == '#F59E0B' ? 'selected' : '' }}
-            >
-                Orange
-            </option>
+            @error('name')
 
-            <option
-                value="#EF4444"
-                {{ $subject->color == '#EF4444' ? 'selected' : '' }}
-            >
-                Red
-            </option>
+                <p class="error-text">
+                    {{ $message }}
+                </p>
 
-        </select>
-    </div>
+            @enderror
 
-    <br>
+        </div>
 
-    <button type="submit">
-        Update
-    </button>
 
-</form>
+
+        {{-- MÀU --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Màu môn học
+            </label>
+
+            <div class="color-picker-wrapper">
+
+                <input type="color"
+                       name="color"
+                       id="colorPicker"
+                       class="color-picker"
+                       value="{{ old('color', $subject->color) }}">
+
+                <!-- <div class="color-preview-wrapper">
+
+                    <div class="color-preview"
+                         id="colorPreview">
+                    </div>
+
+                </div> -->
+
+            </div>
+
+            @error('color')
+
+                <p class="error-text">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+        {{-- BUTTON --}}
+
+        <div class="form-actions">
+
+            <a href="{{ route('subjects.index') }}"
+               class="btn btn-secondary">
+
+                Quay lại
+
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Cập nhật môn học
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script src="{{ asset('assets/admin/js/subjects-create.js') }}"></script>
 
 @endsection

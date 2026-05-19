@@ -54,9 +54,8 @@
 
             <tr>
 
-                <th>ID</th>
+                <!-- <th>ID</th> -->
                 <th>Môn học</th>
-                <th>Slug</th>
                 <th>Màu</th>
                 <th>Action</th>
 
@@ -70,9 +69,9 @@
 
             <tr>
 
-                <td>
+                <!-- <td>
                     #{{ $subject->id }}
-                </td>
+                </td> -->
 
                 <td>
 
@@ -92,23 +91,11 @@
 
                 <td>
 
-                    <span class="badge-slug">
-                        {{ $subject->slug }}
-                    </span>
-
-                </td>
-
-                <td>
-
                     <div class="color-box-wrapper">
 
                         <div class="color-box"
-                             style="background: {{ $subject->color }}">
+                            style="background: {{ $subject->color }}">
                         </div>
-
-                        <span class="color-code">
-                            {{ $subject->color }}
-                        </span>
 
                     </div>
 
@@ -126,13 +113,14 @@
                         </a>
 
                         <form action="{{ route('subjects.destroy', $subject->id) }}"
-                              method="POST">
+                            method="POST"
+                            class="delete-form">
 
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit"
-                                    class="btn-action btn-delete">
+                            <button type="button"
+                                    class="btn-action btn-delete delete-btn">
 
                                 <i class="fa-solid fa-trash"></i>
 
@@ -155,3 +143,9 @@
 </div>
 
 @endsection
+
+@push('scripts')
+
+    <script src="{{ asset('assets/admin/js/subjects.js') }}"></script>
+
+@endpush

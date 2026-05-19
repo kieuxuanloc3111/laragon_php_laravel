@@ -1,66 +1,128 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+
+    <link rel="stylesheet"
+          href="{{ asset('assets/admin/css/subjects-create.css') }}">
+
+@endpush
+
+@section('title', 'Create Subject')
+
 @section('content')
 
-<h1>Create Subject</h1>
-
-<form action="{{ route('subjects.store') }}" method="POST">
-
-    @csrf
+<div class="page-header">
 
     <div>
-        <label>Name</label>
-        <br>
 
-        <input type="text" name="name">
+        <h2 class="page-title">
+            Create Subject
+        </h2>
+
+        <p class="page-subtitle">
+            Thêm môn học mới vào hệ thống
+        </p>
+
     </div>
 
-    <br>
+</div>
 
-    <div>
-        <label>Slug</label>
-        <br>
+<div class="card form-card">
 
-        <input type="text" name="slug">
-    </div>
+    <form action="{{ route('subjects.store') }}"
+          method="POST">
 
-    <br>
+        @csrf
 
-    <div>
-        <label>Color</label>
-        <br>
+        {{-- NAME --}}
 
-        <select name="color">
+        <div class="form-group">
 
-            <option value="#3B82F6">
-                Blue
-            </option>
+            <label class="form-label">
+                Subject Name
+            </label>
 
-            <option value="#10B981">
-                Green
-            </option>
+            <input type="text"
+                   name="name"
+                   id="name"
+                   class="form-input"
+                   placeholder="Ví dụ: Toán học"
+                   value="{{ old('name') }}">
 
-            <option value="#F59E0B">
-                Orange
-            </option>
+            @error('name')
 
-            <option value="#EF4444">
-                Red
-            </option>
+                <p class="error-text">
+                    {{ $message }}
+                </p>
 
-            <option value="#8B5CF6">
-                Purple
-            </option>
+            @enderror
 
-        </select>
-    </div>
+        </div>
 
-    <br>
 
-    <button type="submit">
-        Create
-    </button>
 
-</form>
+        {{-- COLOR --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Subject Color
+            </label>
+
+            <div class="color-picker-wrapper">
+
+                <input type="color"
+                       name="color"
+                       id="colorPicker"
+                       class="color-picker"
+                       value="{{ old('color', '#3B82F6') }}">
+
+            <!-- <div class="color-preview-wrapper">
+
+                <div class="color-preview"
+                    id="colorPreview">
+                </div>
+
+            </div> -->
+
+            </div>
+
+            @error('color')
+
+                <p class="error-text">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+        {{-- BUTTON --}}
+
+        <div class="form-actions">
+
+            <a href="{{ route('subjects.index') }}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Create Subject
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script src="{{ asset('assets/admin/js/subjects-create.js') }}"></script>
 
 @endsection

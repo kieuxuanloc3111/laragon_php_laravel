@@ -11,19 +11,23 @@ class ChapterController extends Controller
 {
     public function index()
     {
-        $chapters = Chapter::with('subject')
-            ->latest()
-            ->get();
+        $subjects = Subject::with([
+            'chapters' => function ($query) {
+
+                $query->orderBy('order_index');
+
+            }
+        ])->orderBy('id')->get();
 
         return view(
             'admin.chapters.index',
-            compact('chapters')
+            compact('subjects')
         );
     }
 
     public function create()
     {
-        $subjects = Subject::all();
+        $subjects = Subject::with('chapters')->get();
 
         return view(
             'admin.chapters.create',

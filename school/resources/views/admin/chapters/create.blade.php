@@ -1,54 +1,157 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+
+    <link rel="stylesheet"
+          href="{{ asset('assets/admin/css/chapters-form.css') }}">
+
+@endpush
+
+@section('title', 'Thêm chuyên đề')
+
 @section('content')
 
-<h1>Create Chapter</h1>
-
-<form action="{{ route('chapters.store') }}" method="POST">
-
-    @csrf
+<div class="page-header">
 
     <div>
-        <label>Subject</label>
-        <br>
 
-        <select name="subject_id">
+        <h2 class="page-title">
+            Thêm chuyên đề
+        </h2>
 
-            @foreach($subjects as $subject)
+        <p class="page-subtitle">
+            Tạo chương hoặc chuyên đề mới cho môn học
+        </p>
 
-                <option value="{{ $subject->id }}">
-                    {{ $subject->name }}
-                </option>
-
-            @endforeach
-
-        </select>
     </div>
 
-    <br>
+</div>
 
-    <div>
-        <label>Name</label>
-        <br>
+<div class="card form-card">
 
-        <input type="text" name="name">
-    </div>
+    <form action="{{ route('chapters.store') }}"
+          method="POST">
 
-    <br>
+        @csrf
 
-    <div>
-        <label>Order</label>
-        <br>
+        {{-- MÔN HỌC --}}
 
-        <input type="number" name="order_index" value="0">
-    </div>
+        <div class="form-group">
 
-    <br>
+            <label class="form-label">
+                Môn học
+            </label>
 
-    <button type="submit">
-        Create
-    </button>
+            <select name="subject_id"
+                    class="form-select"
+                    id="subjectSelect">
 
-</form>
+                @foreach($subjects as $subject)
+
+                    <option
+                        value="{{ $subject->id }}"
+                        data-next-order="{{ $subject->chapters->max('order_index') + 1 }}">
+
+                        {{ $subject->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+            @error('subject_id')
+
+                <p class="error-text">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+        {{-- TÊN CHUYÊN ĐỀ --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Tên chuyên đề
+            </label>
+
+            <input type="text"
+                   name="name"
+                   class="form-input"
+                   placeholder="Ví dụ: Hàm số"
+                   value="{{ old('name') }}">
+
+            @error('name')
+
+                <p class="error-text">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+        {{-- THỨ TỰ --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Thứ tự hiển thị
+            </label>
+
+            <input type="number"
+                name="order_index"
+                class="form-input"
+                id="orderInput"
+                value="1">
+
+            <p class="input-helper">
+                Số nhỏ hơn sẽ hiển thị trước
+            </p>
+
+            @error('order_index')
+
+                <p class="error-text">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+        {{-- BUTTON --}}
+
+        <div class="form-actions">
+
+            <a href="{{ route('chapters.index') }}"
+               class="btn btn-secondary">
+
+                Quay lại
+
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Thêm chuyên đề
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
 
 @endsection
+
+@push('scripts')
+
+    <script src="{{ asset('assets/admin/js/chapters-form.js') }}"></script>
+
+@endpush
