@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use App\Http\Requests\Admin\SubjectRequest;
 class SubjectController extends Controller
 {
     /**
@@ -30,11 +30,9 @@ class SubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:subjects,name',
-        ]);
+
 
         /*
         |--------------------------------------------------------------------------
@@ -77,11 +75,8 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subject $subject)
+    public function update(SubjectRequest $request, Subject $subject)
     {
-        $request->validate([
-            'name' => 'required|unique:subjects,name,' . $subject->id,
-        ]);
 
         $subject->update([
             'name' => $request->name,

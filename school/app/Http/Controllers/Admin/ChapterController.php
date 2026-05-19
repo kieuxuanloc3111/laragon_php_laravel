@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chapter;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\Admin\ChapterRequest;
 class ChapterController extends Controller
 {
     public function index()
@@ -35,13 +35,9 @@ class ChapterController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(ChapterRequest  $request)
     {
-        $request->validate([
-            'subject_id' => 'required',
-            'name' => 'required',
-            'order_index' => 'required|integer',
-        ]);
+
 
         Chapter::create([
             'subject_id' => $request->subject_id,
@@ -64,13 +60,8 @@ class ChapterController extends Controller
         );
     }
 
-    public function update(Request $request, Chapter $chapter)
+    public function update(ChapterRequest $request, Chapter $chapter)
     {
-        $request->validate([
-            'subject_id' => 'required',
-            'name' => 'required',
-            'order_index' => 'required|integer',
-        ]);
 
         $chapter->update([
             'subject_id' => $request->subject_id,
