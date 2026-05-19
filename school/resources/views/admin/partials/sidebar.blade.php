@@ -39,9 +39,14 @@
             <span>Chuyên đề</span>
         </a>
 
-        <a href="#">
+        <a href="{{ route('questions.index') }}">
+
             <i class="fa-solid fa-circle-question"></i>
-            <span>Câu hỏi</span>
+
+            <span>
+                Câu hỏi
+            </span>
+
         </a>
 
         <a href="#">

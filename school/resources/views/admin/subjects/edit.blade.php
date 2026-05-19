@@ -62,42 +62,6 @@
 
 
 
-        {{-- MÀU --}}
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Màu môn học
-            </label>
-
-            <div class="color-picker-wrapper">
-
-                <input type="color"
-                       name="color"
-                       id="colorPicker"
-                       class="color-picker"
-                       value="{{ old('color', $subject->color) }}">
-
-                <!-- <div class="color-preview-wrapper">
-
-                    <div class="color-preview"
-                         id="colorPreview">
-                    </div>
-
-                </div> -->
-
-            </div>
-
-            @error('color')
-
-                <p class="error-text">
-                    {{ $message }}
-                </p>
-
-            @enderror
-
-        </div>
-
         {{-- BUTTON --}}
 
         <div class="form-actions">

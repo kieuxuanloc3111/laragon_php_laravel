@@ -1,0 +1,321 @@
+.page-header{
+    margin-bottom: 24px;
+}
+
+.page-title{
+    font-size: 30px;
+    margin-bottom: 8px;
+    color: #0f172a;
+}
+
+.page-subtitle{
+    color: #64748b;
+}
+
+/* CARD */
+
+.form-card{
+    max-width: 1100px;
+    padding: 32px;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom: 28px;
+}
+
+.form-label{
+    display: block;
+    margin-bottom: 10px;
+
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* HEADER */
+
+.editor-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+/* INPUT */
+
+.form-select{
+    width: 100%;
+    height: 52px;
+
+    border: 1px solid #dbe2ea;
+    border-radius: 14px;
+
+    padding: 0 16px;
+
+    font-size: 15px;
+    background: white;
+
+    transition: all 0.25s ease;
+}
+
+.form-select:focus{
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.1);
+}
+
+/* ANSWERS */
+
+.answers-section{
+    margin-top: 40px;
+}
+
+.section-title{
+    margin-bottom: 20px;
+
+    font-size: 22px;
+    color: #0f172a;
+}
+
+.answer-card{
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.answer-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+.answer-letter{
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.correct-answer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-weight: 500;
+}
+
+/* BUTTON */
+
+.form-actions{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin-top: 40px;
+}
+
+.btn{
+    border: none;
+    border-radius: 12px;
+
+    padding: 14px 22px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    transition: all 0.25s ease;
+}
+
+.btn-primary{
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.btn-secondary{
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.btn-secondary:hover{
+    background: #cbd5e1;
+}
+
+/* CKEDITOR */
+
+.cke{
+    width: 100% !important;
+
+    border: 1px solid #dbe2ea !important;
+    border-radius: 16px !important;
+
+    overflow: hidden;
+
+    box-shadow: none !important;
+}
+
+.cke_top{
+    background: #f8fafc !important;
+
+    border-bottom:
+        1px solid #e2e8f0 !important;
+}
+
+.cke_bottom{
+    background: #f8fafc !important;
+}
+
+.cke_contents{
+    background: white !important;
+    min-height: 220px !important;
+}
+
+.answer-card .cke_contents{
+    min-height: 120px !important;
+}
+
+.cke_wysiwyg_frame{
+    background: white !important;
+}
+
+/* MATH BUTTON */
+
+.math-open-btn{
+    border: none;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    transition: all 0.25s ease;
+}
+
+.math-open-btn:hover{
+    background: #dbeafe;
+}
+
+/* MATH MODAL */
+
+.math-modal{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(15,23,42,0.55);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.math-modal.active{
+    display: flex;
+}
+
+.math-modal-content{
+    width: 700px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 24px;
+}
+
+.math-modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.close-btn{
+    border: none;
+    background: none;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+math-field{
+    width: 100%;
+
+    min-height: 100px;
+
+    border: 1px solid #dbe2ea;
+    border-radius: 16px;
+
+    padding: 20px;
+
+    font-size: 28px;
+
+    --keyboard-zindex: 999999;
+}
+
+.math-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+/* FIX KEYBOARD */
+
+.ML__keyboard{
+    z-index: 999999 !important;
+}
+
+.ML__popover{
+    z-index: 999999 !important;
+}
+
+.ML__virtual-keyboard{
+    z-index: 999999 !important;
+}

@@ -60,43 +60,6 @@
         </div>
 
 
-
-        {{-- COLOR --}}
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Subject Color
-            </label>
-
-            <div class="color-picker-wrapper">
-
-                <input type="color"
-                       name="color"
-                       id="colorPicker"
-                       class="color-picker"
-                       value="{{ old('color', '#3B82F6') }}">
-
-            <!-- <div class="color-preview-wrapper">
-
-                <div class="color-preview"
-                    id="colorPreview">
-                </div>
-
-            </div> -->
-
-            </div>
-
-            @error('color')
-
-                <p class="error-text">
-                    {{ $message }}
-                </p>
-
-            @enderror
-
-        </div>
-
         {{-- BUTTON --}}
 
         <div class="form-actions">

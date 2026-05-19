@@ -34,15 +34,31 @@ class SubjectController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:subjects,name',
-            'color' => 'nullable',
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Random màu không trùng
+        |--------------------------------------------------------------------------
+        */
+
+        do {
+
+            $color = sprintf(
+                '#%06X',
+                mt_rand(0, 0xFFFFFF)
+            );
+
+        } while (
+            Subject::where('color', $color)->exists()
+        );
 
         Subject::create([
             'name' => $request->name,
 
             'slug' => Str::slug($request->name),
 
-            'color' => $request->color,
+            'color' => $color,
         ]);
 
         return redirect()
@@ -65,15 +81,12 @@ class SubjectController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:subjects,name,' . $subject->id,
-            'color' => 'nullable',
         ]);
 
         $subject->update([
             'name' => $request->name,
 
             'slug' => Str::slug($request->name),
-
-            'color' => $request->color,
         ]);
 
         return redirect()

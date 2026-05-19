@@ -2,6 +2,7 @@
 <?php
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\ChapterController;
+use App\Http\Controllers\Admin\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,4 +16,6 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('subjects', SubjectController::class);
     Route::resource('chapters', ChapterController::class);
+    Route::resource('questions', QuestionController::class);
+
 });
