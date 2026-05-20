@@ -63,6 +63,7 @@
     <form
         action="{{ route('exams.autoGenerate', $exam->id) }}"
         method="POST"
+        autocomplete="off"
     >
 
         @csrf
@@ -80,6 +81,7 @@
                 <select
                     name="chapter_id"
                     class="form-select"
+                    id="auto-chapter-select"
                 >
 
                     <option value="">
@@ -489,6 +491,9 @@
 
     const chapterFilter = document.getElementById('chapter-filter');
 
+    const autoChapterSelect =
+    document.getElementById('auto-chapter-select');
+
     const questionItems = document.querySelectorAll('.question-item');
 
     // =========================
@@ -503,6 +508,12 @@
             </option>
         `;
 
+        autoChapterSelect.innerHTML = `
+            <option value="">
+                Tất cả chuyên đề
+            </option>
+        `;
+
         const subject = subjects.find(
             s => s.id == subjectId
         );
@@ -511,11 +522,15 @@
 
         subject.chapters.forEach(chapter => {
 
-            chapterFilter.innerHTML += `
+            const option = `
                 <option value="${chapter.id}">
                     ${chapter.name}
                 </option>
             `;
+
+            chapterFilter.innerHTML += option;
+
+            autoChapterSelect.innerHTML += option;
         });
     }
 
