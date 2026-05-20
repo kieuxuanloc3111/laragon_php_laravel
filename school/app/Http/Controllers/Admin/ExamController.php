@@ -101,29 +101,18 @@ class ExamController extends Controller
                 'chapter.subject',
                 'answers'
             ])
-            ->whereHas(
-                'chapter',
-                function ($query) use ($exam) {
-
-                    $query->where(
-                        'subject_id',
-                        $exam->subject_id
-                    );
-
-                }
-            )
             ->latest()
             ->get();
 
-        return view(
-            'admin.exams.edit',
-            compact(
-                'exam',
-                'subjects',
-                'questions'
-            )
-        );
-    }
+                return view(
+                    'admin.exams.edit',
+                    compact(
+                        'exam',
+                        'subjects',
+                        'questions'
+                    )
+                );
+            }
 
     public function update(
         Request $request,
@@ -197,7 +186,108 @@ class ExamController extends Controller
                 'Cập nhật đề thi thành công'
             );
     }
+    public function autoGenerate(
+        Request $request,
+        Exam $exam
+    )
+    {
+        $request->validate([
 
+            'difficulty' => 'nullable',
+
+            'chapter_id' => 'nullable',
+
+            'question_count' =>
+                'required|integer|min:1',
+
+        ]);
+
+        $query = Question::query()
+
+            ->whereHas(
+                'chapter',
+                function ($q) use ($exam) {
+
+                    $q->where(
+                        'subject_id',
+                        $exam->subject_id
+                    );
+
+                }
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | FILTER CHAPTER
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->chapter_id) {
+
+            $query->where(
+                'chapter_id',
+                $request->chapter_id
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | FILTER DIFFICULTY
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->difficulty) {
+
+            $query->where(
+                'difficulty',
+                $request->difficulty
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RANDOM QUESTIONS
+        |--------------------------------------------------------------------------
+        */
+
+        $questions = $query
+            ->inRandomOrder()
+            ->limit($request->question_count)
+            ->pluck('id')
+            ->toArray();
+
+        /*
+        |--------------------------------------------------------------------------
+        | SYNC
+        |--------------------------------------------------------------------------
+        */
+
+        $exam->questions()
+            ->syncWithoutDetaching($questions);
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE TOTAL
+        |--------------------------------------------------------------------------
+        */
+
+        $exam->update([
+
+            'total_questions' =>
+
+                $exam->questions()
+                    ->count()
+
+        ]);
+
+        return redirect()
+            ->back()
+            ->with(
+                'success',
+                'Tạo đề tự động thành công'
+            );
+    }
+    
     public function destroy(Exam $exam)
     {
         $exam->delete();

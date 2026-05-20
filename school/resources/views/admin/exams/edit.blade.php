@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 
 @push('styles')
@@ -37,6 +38,145 @@
 
 @endif
 
+{{-- =========================
+    AUTO GENERATE
+========================= --}}
+
+<div class="card auto-generate-card">
+
+    <div class="question-header">
+
+        <div>
+
+            <h3 class="section-title">
+                Tạo đề tự động
+            </h3>
+
+            <p class="question-subtitle">
+                Random câu hỏi theo chuyên đề và độ khó
+            </p>
+
+        </div>
+
+    </div>
+
+    <form
+        action="{{ route('exams.autoGenerate', $exam->id) }}"
+        method="POST"
+    >
+
+        @csrf
+
+        <div class="form-grid">
+
+            {{-- CHAPTER --}}
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Chuyên đề
+                </label>
+
+                <select
+                    name="chapter_id"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        Tất cả chuyên đề
+                    </option>
+
+                    @foreach(
+                        $subjects
+                            ->find($exam->subject_id)
+                            ?->chapters ?? []
+                        as $chapter
+                    )
+
+                        <option value="{{ $chapter->id }}">
+
+                            {{ $chapter->name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            {{-- DIFFICULTY --}}
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Độ khó
+                </label>
+
+                <select
+                    name="difficulty"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        Tất cả
+                    </option>
+
+                    <option value="easy">
+                        Dễ
+                    </option>
+
+                    <option value="medium">
+                        Trung bình
+                    </option>
+
+                    <option value="hard">
+                        Khó
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        {{-- COUNT --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Số lượng câu hỏi
+            </label>
+
+            <input
+                type="number"
+                name="question_count"
+                class="form-input"
+                min="1"
+                value="10"
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+            Tạo đề tự động
+
+        </button>
+
+    </form>
+
+</div>
+
+{{-- =========================
+    UPDATE EXAM
+========================= --}}
+
 <form
     action="{{ route('exams.update', $exam->id) }}"
     method="POST"
@@ -44,10 +184,6 @@
 
     @csrf
     @method('PUT')
-
-    {{-- =========================
-        EXAM INFO
-    ========================== --}}
 
     <div class="card form-card">
 
@@ -230,9 +366,7 @@
                 </h3>
 
                 <p class="question-subtitle">
-
                     Chọn các câu hỏi muốn thêm vào đề thi
-
                 </p>
 
             </div>
@@ -251,21 +385,13 @@
 
                 <label
                     class="question-item"
-
                     data-subject="{{ $question->chapter->subject_id }}"
-
                     data-chapter="{{ $question->chapter_id }}"
                 >
 
-                    {{-- NUMBER --}}
-
                     <div class="question-number">
-
                         {{ $index + 1 }}
-
                     </div>
-
-                    {{-- CHECKBOX --}}
 
                     <div class="question-checkbox">
 
@@ -284,28 +410,20 @@
 
                     </div>
 
-                    {{-- CONTENT --}}
-
                     <div class="question-content">
 
                         <div class="question-meta">
 
                             <span class="subject-badge">
-
                                 {{ $question->chapter->subject->name }}
-
                             </span>
 
                             <span class="chapter-badge">
-
                                 {{ $question->chapter->name }}
-
                             </span>
 
                             <span class="difficulty-badge">
-
                                 {{ $question->difficulty }}
-
                             </span>
 
                         </div>
@@ -358,132 +476,116 @@
 
 <script>
 
-const subjects = @json($subjects);
-
-const subjectSelect =
-    document.getElementById(
-        'subject-select'
+    const subjects = @json(
+        $subjects->map(function ($subject) {
+            return [
+                'id' => $subject->id,
+                'chapters' => $subject->chapters
+            ];
+        })
     );
 
-const chapterFilter =
-    document.getElementById(
-        'chapter-filter'
-    );
+    const subjectSelect = document.getElementById('subject-select');
 
-const questionItems =
-    document.querySelectorAll(
-        '.question-item'
-    );
+    const chapterFilter = document.getElementById('chapter-filter');
 
-/*
-|--------------------------------------------------------------------------
-| LOAD CHAPTERS
-|--------------------------------------------------------------------------
-*/
+    const questionItems = document.querySelectorAll('.question-item');
 
-function loadChapters(subjectId)
-{
-    chapterFilter.innerHTML = `
-        <option value="">
-            Tất cả chuyên đề
-        </option>
-    `;
+    // =========================
+    // RENDER CHAPTERS
+    // =========================
 
-    const subject =
-        subjects.find(
-            item => item.id == subjectId
-        );
-
-    if (!subject) return;
-
-    subject.chapters.forEach(chapter => {
-
-        chapterFilter.innerHTML += `
-            <option value="${chapter.id}">
-                ${chapter.name}
+    function renderChapters(subjectId)
+    {
+        chapterFilter.innerHTML = `
+            <option value="">
+                Tất cả chuyên đề
             </option>
         `;
 
-    });
-}
+        const subject = subjects.find(
+            s => s.id == subjectId
+        );
 
-/*
-|--------------------------------------------------------------------------
-| FILTER QUESTIONS
-|--------------------------------------------------------------------------
-*/
+        if (!subject) return;
 
-function filterQuestions()
-{
-    const subjectId =
-        subjectSelect.value;
+        subject.chapters.forEach(chapter => {
 
-    const chapterId =
-        chapterFilter.value;
-
-    questionItems.forEach(item => {
-
-        const itemSubject =
-            item.dataset.subject;
-
-        const itemChapter =
-            item.dataset.chapter;
-
-        let show = true;
-
-        if (
-            subjectId &&
-            itemSubject != subjectId
-        ) {
-            show = false;
-        }
-
-        if (
-            chapterId &&
-            itemChapter != chapterId
-        ) {
-            show = false;
-        }
-
-        item.style.display =
-            show
-                ? 'flex'
-                : 'none';
-
-    });
-}
-
-/*
-|--------------------------------------------------------------------------
-| EVENTS
-|--------------------------------------------------------------------------
-*/
-
-subjectSelect.addEventListener(
-    'change',
-    function () {
-
-        loadChapters(this.value);
-
-        filterQuestions();
-
+            chapterFilter.innerHTML += `
+                <option value="${chapter.id}">
+                    ${chapter.name}
+                </option>
+            `;
+        });
     }
-);
 
-chapterFilter.addEventListener(
-    'change',
-    filterQuestions
-);
+    // =========================
+    // FILTER QUESTIONS
+    // =========================
 
-/*
-|--------------------------------------------------------------------------
-| INIT
-|--------------------------------------------------------------------------
-*/
+    function filterQuestions()
+    {
+        const subjectId = subjectSelect.value;
 
-loadChapters(subjectSelect.value);
+        const chapterId = chapterFilter.value;
 
-filterQuestions();
+        questionItems.forEach(item => {
+
+            const itemSubject =
+                item.dataset.subject;
+
+            const itemChapter =
+                item.dataset.chapter;
+
+            let show = true;
+
+            // filter subject
+            if (
+                subjectId &&
+                itemSubject != subjectId
+            ) {
+                show = false;
+            }
+
+            // filter chapter
+            if (
+                chapterId &&
+                itemChapter != chapterId
+            ) {
+                show = false;
+            }
+
+            item.style.display =
+                show ? 'flex' : 'none';
+        });
+    }
+
+    // =========================
+    // EVENTS
+    // =========================
+
+    subjectSelect.addEventListener(
+        'change',
+        function ()
+        {
+            renderChapters(this.value);
+
+            filterQuestions();
+        }
+    );
+
+    chapterFilter.addEventListener(
+        'change',
+        filterQuestions
+    );
+
+    // =========================
+    // INIT
+    // =========================
+
+    renderChapters(subjectSelect.value);
+
+    filterQuestions();
 
 </script>
 
