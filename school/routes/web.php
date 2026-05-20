@@ -1,36 +1,141 @@
-
 <?php
-use App\Http\Controllers\Admin\SubjectController;
+
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\QuestionController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\SubjectController;
+
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
+
     return view('welcome');
+
 });
-Route::get('/admin', function () {
-    return view('admin.dashboard.index');
-})->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN AUTH
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('admin')->group(function () {
 
-    Route::resource('subjects', SubjectController::class);
-    Route::resource('chapters', ChapterController::class);
-    Route::resource('questions', QuestionController::class);
-    Route::resource('exams', ExamController::class);
+    Route::get(
+        '/login',
+        [AuthController::class, 'showLogin']
+    )->name('login');
 
     Route::post(
-        'exams/{exam}/add-question',
-        [ExamController::class, 'addQuestion']
-    )->name('exams.addQuestion');
+        '/login',
+        [AuthController::class, 'login']
+    );
 
-    Route::delete(
-        'exams/{exam}/remove-question/{question}',
-        [ExamController::class, 'removeQuestion']
-    )->name('exams.removeQuestion');
+    Route::get(
+        '/register',
+        [AuthController::class, 'showRegister']
+    );
 
     Route::post(
-        'exams/{exam}/auto-generate',
-        [ExamController::class, 'autoGenerate']
-    )->name('exams.autoGenerate');
+        '/register',
+        [AuthController::class, 'register']
+    );
+
 });
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN PROTECTED
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')
+    ->middleware('teacher')
+    ->group(function () {
+
+        Route::get('/', function () {
+
+            return view(
+                'admin.dashboard.index'
+            );
+
+        })->name('dashboard');
+
+        /*
+        |--------------------------------------------------------------------------
+        | SUBJECTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'subjects',
+            SubjectController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | CHAPTERS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'chapters',
+            ChapterController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUESTIONS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'questions',
+            QuestionController::class
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXAMS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'exams',
+            ExamController::class
+        );
+
+        Route::post(
+            'exams/{exam}/add-question',
+            [ExamController::class, 'addQuestion']
+        )->name('exams.addQuestion');
+
+        Route::delete(
+            'exams/{exam}/remove-question/{question}',
+            [ExamController::class, 'removeQuestion']
+        )->name('exams.removeQuestion');
+
+        Route::post(
+            'exams/{exam}/auto-generate',
+            [ExamController::class, 'autoGenerate']
+        )->name('exams.autoGenerate');
+
+        /*
+        |--------------------------------------------------------------------------
+        | LOGOUT
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/logout',
+            [AuthController::class, 'logout']
+        )->name('logout');
+
+    });

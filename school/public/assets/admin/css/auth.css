@@ -1,0 +1,195 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Be Vietnam Pro',sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff 0%,
+            #dbeafe 100%
+        );
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 20px;
+}
+
+.auth-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+
+.auth-card{
+    width:100%;
+    max-width:460px;
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:40px;
+
+    box-shadow:
+        0 20px 50px rgba(15,23,42,0.08);
+}
+
+.register-card{
+    max-width:520px;
+}
+
+.auth-header{
+    text-align:center;
+
+    margin-bottom:32px;
+}
+
+.logo-circle{
+    width:72px;
+    height:72px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 18px;
+
+    font-size:30px;
+}
+
+.auth-header h1{
+    font-size:30px;
+
+    color:#0f172a;
+
+    margin-bottom:10px;
+}
+
+.auth-header p{
+    color:#64748b;
+
+    font-size:15px;
+}
+
+.alert-error{
+    margin-bottom:22px;
+
+    background:#fef2f2;
+
+    border:1px solid #fecaca;
+
+    color:#b91c1c;
+
+    border-radius:14px;
+
+    padding:14px 18px;
+}
+
+.alert-error p{
+    margin-bottom:6px;
+}
+
+.alert-error p:last-child{
+    margin-bottom:0;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+    color:#1e293b;
+}
+
+.form-group input{
+    width:100%;
+
+    height:54px;
+
+    border:1px solid #dbe2ea;
+
+    border-radius:16px;
+
+    padding:0 18px;
+
+    font-size:15px;
+
+    transition:all .25s ease;
+}
+
+.form-group input:focus{
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.1);
+}
+
+.file-input{
+    padding:14px !important;
+    height:auto !important;
+}
+
+.btn-submit{
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+}
+
+.btn-submit:hover{
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+}
+
+.auth-footer{
+    margin-top:26px;
+
+    text-align:center;
+
+    color:#64748b;
+}
+
+.auth-footer a{
+    color:#2563eb;
+
+    font-weight:600;
+
+    text-decoration:none;
+}

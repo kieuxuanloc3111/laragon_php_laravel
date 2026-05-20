@@ -231,3 +231,150 @@ body {
     }
 
 }
+.logout-btn{
+    border:none;
+
+    background:#fef2f2;
+    color:#dc2626;
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+}
+
+/* =========================
+   HEADER RIGHT
+========================= */
+
+.header-right{
+    margin-left:auto;
+
+    display:flex;
+    align-items:center;
+}
+
+/* PROFILE */
+
+.admin-profile{
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    background:white;
+
+    padding:10px 18px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 24px rgba(15,23,42,0.06);
+}
+
+/* AVATAR */
+
+.admin-avatar{
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    background:#2563eb;
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+    font-weight:700;
+
+    flex-shrink:0;
+
+    border:3px solid #dbeafe;
+}
+
+.admin-avatar img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+/* INFO */
+
+.admin-meta h4{
+    font-size:17px;
+
+    color:#0f172a;
+
+    margin-bottom:4px;
+}
+
+.admin-meta span{
+    display:inline-block;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    background:#eff6ff;
+    color:#2563eb;
+
+    font-size:12px;
+    font-weight:600;
+
+    text-transform:capitalize;
+}
+
+/* LOGOUT */
+
+.logout-btn{
+    border:none;
+
+    background:#fef2f2;
+    color:#dc2626;
+
+    height:42px;
+
+    padding:0 16px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-weight:600;
+
+    transition:all .25s ease;
+}
+
+.logout-btn:hover{
+    background:#fee2e2;
+
+    transform:translateY(-1px);
+}
+
+/* AUTH LINKS */
+
+.header-auth-links{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.header-auth-links a{
+    text-decoration:none;
+
+    color:#2563eb;
+
+    font-weight:600;
+}

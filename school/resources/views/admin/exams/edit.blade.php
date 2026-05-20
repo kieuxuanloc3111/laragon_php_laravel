@@ -45,6 +45,10 @@
     @csrf
     @method('PUT')
 
+    {{-- =========================
+        EXAM INFO
+    ========================== --}}
+
     <div class="card form-card">
 
         {{-- SUBJECT --}}
@@ -58,13 +62,14 @@
             <select
                 name="subject_id"
                 class="form-select"
-                
+                id="subject-select"
             >
 
                 @foreach($subjects as $subject)
 
                     <option
                         value="{{ $subject->id }}"
+
                         {{
                             $exam->subject_id ==
                             $subject->id
@@ -78,6 +83,27 @@
                     </option>
 
                 @endforeach
+
+            </select>
+
+        </div>
+
+        {{-- CHAPTER FILTER --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Chuyên đề
+            </label>
+
+            <select
+                id="chapter-filter"
+                class="form-select"
+            >
+
+                <option value="">
+                    Tất cả chuyên đề
+                </option>
 
             </select>
 
@@ -189,7 +215,9 @@
 
     </div>
 
-    {{-- QUESTION LIST --}}
+    {{-- =========================
+        QUESTION LIST
+    ========================== --}}
 
     <div class="card question-card">
 
@@ -221,12 +249,24 @@
 
             @foreach($questions as $index => $question)
 
-                <label class="question-item">
+                <label
+                    class="question-item"
+
+                    data-subject="{{ $question->chapter->subject_id }}"
+
+                    data-chapter="{{ $question->chapter_id }}"
+                >
+
+                    {{-- NUMBER --}}
+
                     <div class="question-number">
 
-                        #{{ $index + 1 }}
+                        {{ $index + 1 }}
 
                     </div>
+
+                    {{-- CHECKBOX --}}
+
                     <div class="question-checkbox">
 
                         <input
@@ -244,6 +284,8 @@
 
                     </div>
 
+                    {{-- CONTENT --}}
+
                     <div class="question-content">
 
                         <div class="question-meta">
@@ -251,6 +293,12 @@
                             <span class="subject-badge">
 
                                 {{ $question->chapter->subject->name }}
+
+                            </span>
+
+                            <span class="chapter-badge">
+
+                                {{ $question->chapter->name }}
 
                             </span>
 
@@ -305,3 +353,138 @@
 </form>
 
 @endsection
+
+@push('scripts')
+
+<script>
+
+const subjects = @json($subjects);
+
+const subjectSelect =
+    document.getElementById(
+        'subject-select'
+    );
+
+const chapterFilter =
+    document.getElementById(
+        'chapter-filter'
+    );
+
+const questionItems =
+    document.querySelectorAll(
+        '.question-item'
+    );
+
+/*
+|--------------------------------------------------------------------------
+| LOAD CHAPTERS
+|--------------------------------------------------------------------------
+*/
+
+function loadChapters(subjectId)
+{
+    chapterFilter.innerHTML = `
+        <option value="">
+            Tất cả chuyên đề
+        </option>
+    `;
+
+    const subject =
+        subjects.find(
+            item => item.id == subjectId
+        );
+
+    if (!subject) return;
+
+    subject.chapters.forEach(chapter => {
+
+        chapterFilter.innerHTML += `
+            <option value="${chapter.id}">
+                ${chapter.name}
+            </option>
+        `;
+
+    });
+}
+
+/*
+|--------------------------------------------------------------------------
+| FILTER QUESTIONS
+|--------------------------------------------------------------------------
+*/
+
+function filterQuestions()
+{
+    const subjectId =
+        subjectSelect.value;
+
+    const chapterId =
+        chapterFilter.value;
+
+    questionItems.forEach(item => {
+
+        const itemSubject =
+            item.dataset.subject;
+
+        const itemChapter =
+            item.dataset.chapter;
+
+        let show = true;
+
+        if (
+            subjectId &&
+            itemSubject != subjectId
+        ) {
+            show = false;
+        }
+
+        if (
+            chapterId &&
+            itemChapter != chapterId
+        ) {
+            show = false;
+        }
+
+        item.style.display =
+            show
+                ? 'flex'
+                : 'none';
+
+    });
+}
+
+/*
+|--------------------------------------------------------------------------
+| EVENTS
+|--------------------------------------------------------------------------
+*/
+
+subjectSelect.addEventListener(
+    'change',
+    function () {
+
+        loadChapters(this.value);
+
+        filterQuestions();
+
+    }
+);
+
+chapterFilter.addEventListener(
+    'change',
+    filterQuestions
+);
+
+/*
+|--------------------------------------------------------------------------
+| INIT
+|--------------------------------------------------------------------------
+*/
+
+loadChapters(subjectSelect.value);
+
+filterQuestions();
+
+</script>
+
+@endpush

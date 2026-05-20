@@ -1,33 +1,98 @@
-<header class="header">
+<div class="header-right">
 
-    <div class="header-left">
+    @guest
 
-        <button class="menu-toggle" id="menuToggle">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        <div class="header-auth-links">
 
-        <div>
-            <h1>Admin Dashboard</h1>
-            <p>Hệ thống quản lý luyện thi THPT</p>
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
         </div>
 
-    </div>
+    @endguest
 
-    <div class="header-right">
+    @auth
 
-        <div class="admin-info">
+        <div class="admin-profile">
+
+            {{-- AVATAR --}}
 
             <div class="admin-avatar">
-                A
+
+                @if(auth()->user()->image)
+
+                    <img
+                        src="{{ asset('storage/' . auth()->user()->image) }}"
+                        alt=""
+                    >
+
+                @else
+
+                    <span>
+
+                        {{
+                            strtoupper(
+                                substr(
+                                    auth()->user()->name,
+                                    0,
+                                    1
+                                )
+                            )
+                        }}
+
+                    </span>
+
+                @endif
+
             </div>
 
-            <div>
-                <h4>Admin</h4>
-                <span>Quản trị viên</span>
+            {{-- INFO --}}
+
+            <div class="admin-meta">
+
+                <h4>
+
+                    {{ auth()->user()->name }}
+
+                </h4>
+
+                <span>
+
+                    {{ auth()->user()->role }}
+
+                </span>
+
             </div>
+
+            {{-- LOGOUT --}}
+
+            <form
+                action="{{ route('logout') }}"
+                method="POST"
+            >
+
+                @csrf
+
+                <button
+                    type="submit"
+                    class="logout-btn"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </button>
+
+            </form>
 
         </div>
 
-    </div>
+    @endauth
 
-</header>
+</div>

@@ -93,7 +93,8 @@ class ExamController extends Controller
             'subject'
         ]);
 
-        $subjects = Subject::orderBy('name')
+        $subjects = Subject::with('chapters')
+            ->orderBy('name')
             ->get();
 
         $questions = Question::with([
