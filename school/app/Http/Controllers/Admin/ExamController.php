@@ -263,7 +263,7 @@ class ExamController extends Controller
         */
 
         $exam->questions()
-            ->syncWithoutDetaching($questions);
+            ->sync($questions);
 
         /*
         |--------------------------------------------------------------------------
