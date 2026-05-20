@@ -8,7 +8,7 @@ use App\Models\Chapter;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Subject;
-
+use App\Http\Requests\Admin\QuestionRequest;
 class QuestionController extends Controller
 {
     public function index()
@@ -38,19 +38,8 @@ class QuestionController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(QuestionRequest  $request)
     {
-        $request->validate([
-            'chapter_id' => 'required',
-
-            'content' => 'required',
-
-            'difficulty' => 'required',
-
-            'answers' => 'required|array|size:4',
-
-            'correct_answer' => 'required',
-        ]);
 
         $question = Question::create([
 
@@ -110,21 +99,10 @@ class QuestionController extends Controller
     }
 
     public function update(
-        Request $request,
+        QuestionRequest $request,
         Question $question
     )
     {
-        $request->validate([
-            'chapter_id' => 'required',
-
-            'content' => 'required',
-
-            'difficulty' => 'required',
-
-            'answers' => 'required|array|size:4',
-
-            'correct_answer' => 'required',
-        ]);
 
         $question->update([
 

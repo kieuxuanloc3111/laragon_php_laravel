@@ -56,7 +56,6 @@
 
                 <!-- <th>ID</th> -->
                 <th>Môn học</th>
-                <th>Màu</th>
                 <th>Action</th>
 
             </tr>
@@ -84,18 +83,6 @@
                         <span class="subject-name">
                             {{ $subject->name }}
                         </span>
-
-                    </div>
-
-                </td>
-
-                <td>
-
-                    <div class="color-box-wrapper">
-
-                        <div class="color-box"
-                            style="background: {{ $subject->color }}">
-                        </div>
 
                     </div>
 

@@ -49,9 +49,14 @@
 
         </a>
 
-        <a href="#">
+        <a href="{{ route('exams.index') }}">
+
             <i class="fa-solid fa-file-lines"></i>
-            <span>Đề thi</span>
+
+            <span>
+                Đề thi
+            </span>
+
         </a>
 
         <a href="#">

@@ -254,3 +254,9 @@ img[alt="math"]{
     }
 
 }
+.cke_notifications_area,
+.cke_notification,
+.cke_notification_warning,
+.cke_notifications_area *{
+    display: none !important;
+}

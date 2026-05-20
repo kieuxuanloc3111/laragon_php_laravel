@@ -316,7 +316,12 @@
 
 @push('scripts')
 
-<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+
+<script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
+<script>
+    window.CKEDITOR_VERSION_CHECK = false;
+    window.CKEDITOR_DISABLE_VERSION_CHECK = true;
+</script>
 
 <script type="module">
 
@@ -428,6 +433,15 @@
                 });
 
             });
+
+        // XÓA WARNING CKEDITOR
+        setTimeout(() => {
+
+            document
+                .querySelectorAll('.cke_notifications_area')
+                .forEach(el => el.remove());
+
+        }, 1000);
 
     });
 

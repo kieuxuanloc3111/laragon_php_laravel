@@ -1,0 +1,307 @@
+@extends('admin.layouts.app')
+
+@push('styles')
+
+<link rel="stylesheet"
+      href="{{ asset('assets/admin/css/exams.css') }}">
+
+@endpush
+
+@section('title', 'Chỉnh sửa đề thi')
+
+@section('content')
+
+<div class="page-header">
+
+    <div>
+
+        <h2 class="page-title">
+            Chỉnh sửa đề thi
+        </h2>
+
+        <p class="page-subtitle">
+            Quản lý thông tin và câu hỏi đề thi
+        </p>
+
+    </div>
+
+</div>
+
+@if(session('success'))
+
+    <div class="alert-success">
+
+        {{ session('success') }}
+
+    </div>
+
+@endif
+
+<form
+    action="{{ route('exams.update', $exam->id) }}"
+    method="POST"
+>
+
+    @csrf
+    @method('PUT')
+
+    <div class="card form-card">
+
+        {{-- SUBJECT --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Môn học
+            </label>
+
+            <select
+                name="subject_id"
+                class="form-select"
+                
+            >
+
+                @foreach($subjects as $subject)
+
+                    <option
+                        value="{{ $subject->id }}"
+                        {{
+                            $exam->subject_id ==
+                            $subject->id
+                            ? 'selected'
+                            : ''
+                        }}
+                    >
+
+                        {{ $subject->name }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
+        {{-- TITLE --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Tên đề thi
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                class="form-input"
+                value="{{ $exam->title }}"
+            >
+
+        </div>
+
+        {{-- DESCRIPTION --}}
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Mô tả
+            </label>
+
+            <textarea
+                name="description"
+                class="form-textarea"
+                rows="5"
+            >{{ $exam->description }}</textarea>
+
+        </div>
+
+        <div class="form-grid">
+
+            {{-- DURATION --}}
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Thời gian làm bài
+                </label>
+
+                <input
+                    type="number"
+                    name="duration_minutes"
+                    class="form-input"
+                    value="{{ $exam->duration_minutes }}"
+                >
+
+            </div>
+
+            {{-- STATUS --}}
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Trạng thái
+                </label>
+
+                <select
+                    name="status"
+                    class="form-select"
+                >
+
+                    <option
+                        value="draft"
+                        {{
+                            $exam->status == 'draft'
+                            ? 'selected'
+                            : ''
+                        }}
+                    >
+                        Bản nháp
+                    </option>
+
+                    <option
+                        value="published"
+                        {{
+                            $exam->status == 'published'
+                            ? 'selected'
+                            : ''
+                        }}
+                    >
+                        Xuất bản
+                    </option>
+
+                    <option
+                        value="archived"
+                        {{
+                            $exam->status == 'archived'
+                            ? 'selected'
+                            : ''
+                        }}
+                    >
+                        Lưu trữ
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- QUESTION LIST --}}
+
+    <div class="card question-card">
+
+        <div class="question-header">
+
+            <div>
+
+                <h3 class="section-title">
+                    Danh sách câu hỏi
+                </h3>
+
+                <p class="question-subtitle">
+
+                    Chọn các câu hỏi muốn thêm vào đề thi
+
+                </p>
+
+            </div>
+
+            <div class="question-count">
+
+                {{ $exam->questions->count() }} câu
+
+            </div>
+
+        </div>
+
+        <div class="question-list">
+
+            @foreach($questions as $index => $question)
+
+                <label class="question-item">
+                    <div class="question-number">
+
+                        #{{ $index + 1 }}
+
+                    </div>
+                    <div class="question-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="question_ids[]"
+                            value="{{ $question->id }}"
+
+                            {{
+                                $exam->questions
+                                    ->contains($question->id)
+                                ? 'checked'
+                                : ''
+                            }}
+                        >
+
+                    </div>
+
+                    <div class="question-content">
+
+                        <div class="question-meta">
+
+                            <span class="subject-badge">
+
+                                {{ $question->chapter->subject->name }}
+
+                            </span>
+
+                            <span class="difficulty-badge">
+
+                                {{ $question->difficulty }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="question-preview">
+
+                            {!! $question->content !!}
+
+                        </div>
+
+                    </div>
+
+                </label>
+
+            @endforeach
+
+        </div>
+
+    </div>
+
+    {{-- BUTTON --}}
+
+    <div class="form-actions">
+
+        <a href="{{ route('exams.index') }}"
+           class="btn btn-secondary">
+
+            Quay lại
+
+        </a>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Cập nhật đề thi
+
+        </button>
+
+    </div>
+
+</form>
+
+@endsection
