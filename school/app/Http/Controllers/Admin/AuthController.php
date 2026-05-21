@@ -136,7 +136,7 @@ class AuthController extends Controller
         ]);
 
         if (
-            Auth::attempt($credentials)
+            Auth::attempt($credentials,$request->remember)
         ) {
 
             $request->session()

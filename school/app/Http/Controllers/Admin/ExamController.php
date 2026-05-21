@@ -193,7 +193,14 @@ class ExamController extends Controller
     {
         $request->validate([
 
-            'difficulty' => 'nullable',
+            'easy_percent' =>
+                'required|integer|min:0|max:100',
+
+            'medium_percent' =>
+                'required|integer|min:0|max:100',
+
+            'hard_percent' =>
+                'required|integer|min:0|max:100',
 
             'chapter_id' => 'nullable',
 
@@ -201,6 +208,15 @@ class ExamController extends Controller
                 'required|integer|min:1',
 
         ]);
+        $totalPercent =$request->easy_percent +$request->medium_percent +$request->hard_percent;
+
+        if ($totalPercent != 100) {
+
+            return back()->with(
+                'error',
+                'Tổng phần trăm phải bằng 100'
+            );
+        }
 
         $query = Question::query()
 
@@ -235,26 +251,110 @@ class ExamController extends Controller
         | FILTER DIFFICULTY
         |--------------------------------------------------------------------------
         */
+        $totalQuestions =
+            (int) $request->question_count;
 
-        if ($request->difficulty) {
+        $easyCount = floor(
+            $totalQuestions *
+            $request->easy_percent / 100
+        );
 
-            $query->where(
-                'difficulty',
-                $request->difficulty
-            );
-        }
+        $mediumCount = floor(
+            $totalQuestions *
+            $request->medium_percent / 100
+        );
+
+        $hardCount =
+
+            $totalQuestions -
+
+            $easyCount -
+
+            $mediumCount;
 
         /*
         |--------------------------------------------------------------------------
-        | RANDOM QUESTIONS
+        | GET QUESTIONS
         |--------------------------------------------------------------------------
         */
 
-        $questions = $query
+        $easyQuestions = (clone $query)
+
+            ->where('difficulty', 'easy')
+
             ->inRandomOrder()
-            ->limit($request->question_count)
-            ->pluck('id')
-            ->toArray();
+
+            ->limit($easyCount)
+
+            ->pluck('id');
+
+        $mediumQuestions = (clone $query)
+
+            ->where('difficulty', 'medium')
+
+            ->inRandomOrder()
+
+            ->limit($mediumCount)
+
+            ->pluck('id');
+
+        $hardQuestions = (clone $query)
+
+            ->where('difficulty', 'hard')
+
+            ->inRandomOrder()
+
+            ->limit($hardCount)
+
+            ->pluck('id');
+
+        /*
+        |--------------------------------------------------------------------------
+        | MERGE
+        |--------------------------------------------------------------------------
+        */
+
+        $questions = collect()
+
+            ->merge($easyQuestions)
+
+            ->merge($mediumQuestions)
+
+            ->merge($hardQuestions)
+
+            ->unique();
+
+        /*
+        |--------------------------------------------------------------------------
+        | FILL MISSING QUESTIONS
+        |--------------------------------------------------------------------------
+        */
+
+        $currentCount =
+            $questions->count();
+
+        $missing =
+            $totalQuestions - $currentCount;
+
+        if ($missing > 0) {
+
+            $extraQuestions = (clone $query)
+
+                ->whereNotIn(
+                    'id',
+                    $questions->toArray()
+                )
+
+                ->inRandomOrder()
+
+                ->limit($missing)
+
+                ->pluck('id');
+
+            $questions = $questions
+                ->merge($extraQuestions)
+                ->unique();
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -263,7 +363,7 @@ class ExamController extends Controller
         */
 
         $exam->questions()
-            ->sync($questions);
+            ->sync($questions->toArray());
 
         /*
         |--------------------------------------------------------------------------

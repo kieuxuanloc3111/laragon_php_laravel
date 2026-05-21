@@ -104,6 +104,24 @@
                     name="password"
                     placeholder="Nhập mật khẩu..."
                 >
+                {{-- REMEMBER ME --}}
+
+                <div class="remember-group">
+
+                    <label class="remember-label">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        <span>
+                            Ghi nhớ đăng nhập
+                        </span>
+
+                    </label>
+
+                </div>
 
             </div>
 

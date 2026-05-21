@@ -110,32 +110,72 @@
 
             <div class="form-group">
 
-                <label class="form-label">
+                <!-- <label class="form-label">
                     Độ khó
+                </label> -->
+
+            {{-- DIFFICULTY PERCENT --}}
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Tỷ lệ độ khó (%)
                 </label>
 
-                <select
-                    name="difficulty"
-                    class="form-select"
-                >
+                <div class="form-grid">
 
-                    <option value="">
-                        Tất cả
-                    </option>
+                    <div>
 
-                    <option value="easy">
-                        Dễ
-                    </option>
+                        <label>Dễ</label>
 
-                    <option value="medium">
-                        Trung bình
-                    </option>
+                        <input
+                            type="number"
+                            name="easy_percent"
+                            class="form-input"
+                            value="50"
+                            min="0"
+                            max="100"
+                        >
 
-                    <option value="hard">
-                        Khó
-                    </option>
+                    </div>
 
-                </select>
+                    <div>
+
+                        <label>Trung bình</label>
+
+                        <input
+                            type="number"
+                            name="medium_percent"
+                            class="form-input"
+                            value="30"
+                            min="0"
+                            max="100"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label>Khó</label>
+
+                        <input
+                            type="number"
+                            name="hard_percent"
+                            class="form-input"
+                            value="20"
+                            min="0"
+                            max="100"
+                        >
+
+                    </div>
+
+                </div>
+
+                <small>
+                    Tổng phải bằng 100%
+                </small>
+
+            </div>
 
             </div>
 
