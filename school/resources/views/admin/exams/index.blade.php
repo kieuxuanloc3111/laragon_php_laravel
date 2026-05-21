@@ -142,5 +142,7 @@
     @endforeach
 
 </div>
-
+<script>
+    console.log(@json($exams));
+</script>
 @endsection

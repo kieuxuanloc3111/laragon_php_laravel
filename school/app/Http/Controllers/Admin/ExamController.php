@@ -7,7 +7,7 @@ use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class ExamController extends Controller
 {
     public function index()
@@ -16,7 +16,7 @@ class ExamController extends Controller
             ->withCount('questions')
             ->latest()
             ->get();
-
+        Log::info($exams->toArray());
         return view(
             'admin.exams.index',
             compact('exams')
