@@ -34,8 +34,7 @@ class StudentExamController extends Controller
             ], 404);
         }
 
-        // fake user
-        $userId = 2;
+        $userId = auth()->id();
 
         // kiểm tra đang thi dở
         $existingExam = StudentExam::where(
@@ -90,6 +89,15 @@ class StudentExamController extends Controller
         Request $request,
         StudentExam $studentExam
     ) {
+        if (
+            $studentExam->user_id !== auth()->id()
+        ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden'
+            ], 403);
+        }
 
         // tránh submit lại
         if ($studentExam->status === 'submitted') {
@@ -162,6 +170,15 @@ class StudentExamController extends Controller
     }
     public function review(StudentExam $studentExam)
     {
+        if (
+            $studentExam->user_id !== auth()->id()
+        ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden'
+            ], 403);
+        }
         // chỉ review bài đã submit
         if ($studentExam->status !== 'submitted') {
 
@@ -223,8 +240,7 @@ class StudentExamController extends Controller
     }    
     public function history()
     {
-        // fake user
-        $userId = 2;
+        $userId = auth()->id();
 
         $studentExams = StudentExam::with([
             'exam.subject'

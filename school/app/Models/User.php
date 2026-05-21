@@ -10,9 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Question;
 use App\Models\Exam;
 use App\Models\StudentExam;
+use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
+    use HasApiTokens;
     use HasFactory, Notifiable;
 
     /**

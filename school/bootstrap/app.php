@@ -21,6 +21,8 @@ return Application::configure(
 
         'teacher' =>
             \App\Http\Middleware\Teacher\TeacherMiddleware::class,
+        'student' =>
+            \App\Http\Middleware\Student\StudentMiddleware::class,
 
     ]);
 
