@@ -39,7 +39,8 @@
             <span>Chuyên đề</span>
         </a>
 
-        <a href="{{ route('questions.index') }}">
+        <a href="{{ route('questions.index') }}"
+           class="{{ request()->routeIs('questions.*') ? 'active' : '' }}">
 
             <i class="fa-solid fa-circle-question"></i>
 
@@ -49,7 +50,8 @@
 
         </a>
 
-        <a href="{{ route('exams.index') }}">
+        <a href="{{ route('exams.index') }}"
+           class="{{ request()->routeIs('exams.*') ? 'active' : '' }}">
 
             <i class="fa-solid fa-file-lines"></i>
 
@@ -59,7 +61,8 @@
 
         </a>
 
-        <a href="#">
+        <a href="{{ route('students.index') }}"
+           class="{{ request()->routeIs('students.*') ? 'active' : '' }}">
             <i class="fa-solid fa-users"></i>
             <span>Học sinh</span>
         </a>

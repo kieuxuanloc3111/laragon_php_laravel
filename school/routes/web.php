@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Admin\StudentManageController;
 use App\Http\Controllers\Admin\SubjectController;
 
 /*
@@ -126,6 +127,17 @@ Route::prefix('admin')
             'exams/{exam}/auto-generate',
             [ExamController::class, 'autoGenerate']
         )->name('exams.autoGenerate');
+
+        /*
+        |--------------------------------------------------------------------------
+        | STUDENTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            'students',
+            [StudentManageController::class, 'index']
+        )->name('students.index');
 
         /*
         |--------------------------------------------------------------------------
