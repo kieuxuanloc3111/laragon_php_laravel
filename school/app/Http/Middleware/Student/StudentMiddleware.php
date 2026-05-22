@@ -13,6 +13,7 @@ class StudentMiddleware
         Closure $next
     ): Response {
 
+        // chưa login
         if (!auth()->check()) {
 
             return response()->json([
@@ -20,8 +21,9 @@ class StudentMiddleware
             ], 401);
         }
 
+        // không phải student
         if (
-            auth()->user()->role !== 'student'
+            auth()->user()->role != 'student'
         ) {
 
             return response()->json([

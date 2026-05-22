@@ -80,7 +80,7 @@ class StudentExamController extends Controller
             'success' => true,
 
             'student_exam_id' => $studentExam->id,
-
+            'started_at' => $studentExam->started_at,
             'data' => $exam
         ]);
     }
@@ -283,4 +283,6 @@ class StudentExamController extends Controller
             'data' => $result
         ]);
     }
+
+
 }

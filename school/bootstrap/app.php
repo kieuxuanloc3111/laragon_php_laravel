@@ -16,7 +16,11 @@ return Application::configure(
 )
 
 ->withMiddleware(function ($middleware) {
+    $middleware->trustProxies(at: '*');
 
+    $middleware->validateCsrfTokens(
+        except: ['api/*']
+    );
     $middleware->alias([
 
         'teacher' =>
