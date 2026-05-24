@@ -97,6 +97,11 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
+        Route::post(
+            'questions/upload-image',
+            [QuestionController::class, 'uploadImage']
+        )->name('questions.uploadImage');
+
         Route::resource(
             'questions',
             QuestionController::class
