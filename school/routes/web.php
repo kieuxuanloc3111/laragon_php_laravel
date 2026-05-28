@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\ExamResultController;
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\StudentManageController;
@@ -143,6 +144,22 @@ Route::prefix('admin')
             'students',
             [StudentManageController::class, 'index']
         )->name('students.index');
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXAM RESULTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            'exam-results',
+            [ExamResultController::class, 'index']
+        )->name('exam-results.index');
+
+        Route::get(
+            'exam-results/{student}',
+            [ExamResultController::class, 'show']
+        )->name('exam-results.show');
 
         /*
         |--------------------------------------------------------------------------

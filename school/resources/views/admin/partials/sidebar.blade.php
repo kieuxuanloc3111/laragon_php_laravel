@@ -67,7 +67,8 @@
             <span>Học sinh</span>
         </a>
 
-        <a href="#">
+        <a href="{{ route('exam-results.index') }}"
+           class="{{ request()->routeIs('exam-results.*') ? 'active' : '' }}">
             <i class="fa-solid fa-chart-column"></i>
             <span>Kết quả thi</span>
         </a>

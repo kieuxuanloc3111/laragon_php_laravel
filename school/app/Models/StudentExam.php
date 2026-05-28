@@ -16,6 +16,12 @@ class StudentExam extends Model
         'status',
     ];
 
+    protected $casts = [
+        'started_at' => 'datetime',
+        'submitted_at' => 'datetime',
+        'score' => 'decimal:2',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
