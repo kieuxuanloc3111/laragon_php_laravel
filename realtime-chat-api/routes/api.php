@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Events\MessageSent;
 use Pusher\Pusher;
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\Message;
 Route::post('/register', function (Request $request) {
 
     $request->validate([
@@ -136,3 +137,32 @@ $pusher->trigger(
 return 'ok';
 
 });
+
+Route::post('/messages', function (Request $request) {
+
+
+$message = Message::create([
+
+    'sender_id' => $request->user()->id,
+
+    'receiver_id' => $request->receiver_id,
+
+    'message' => $request->message,
+]);
+
+$message->load('sender');
+
+broadcast(new MessageSent(
+$message,
+$request->receiver_id
+));
+
+
+return response()->json(
+
+$message->load('sender')
+
+);
+
+
+})->middleware('auth:sanctum');
