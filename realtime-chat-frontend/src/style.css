@@ -1,0 +1,71 @@
+:root {
+    /* Bảng màu (Messenger / Telegram blend) */
+    --primary: #0a7cff;
+    --primary-dark: #0064d8;
+    --primary-soft: #e7f0ff;
+
+    --bg: #ffffff;
+    --bg-sidebar: #f7f8fa;
+    --bg-chat: #f0f2f5;
+    --bubble-in: #ffffff;
+    --bubble-out: #0a7cff;
+
+    --text: #1c1e21;
+    --text-muted: #65676b;
+    --border: #e4e6eb;
+
+    --danger: #ff3b30;
+    --online: #31a24c;
+
+    --radius: 14px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg-chat);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+    height: 100vh;
+}
+
+button {
+    font-family: inherit;
+}
+
+input,
+textarea {
+    font-family: inherit;
+    outline: none;
+}
+
+/* Thanh cuộn mảnh hiện đại */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.28);
+}
